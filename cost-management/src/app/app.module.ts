@@ -7,6 +7,7 @@ import { AppHeaderComponent } from './features/app-header/app-header.component';
 import { TopNavComponent } from './features/top-nav/top-nav.component';
 import { HomeComponent } from './components/home/home.component';
 import { ThemeToggleComponent } from './features/theme-toggle/theme-toggle.component';
+import { InvoiceUploadComponent } from './components/invoice-upload/invoice-upload.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { ThemeToggleComponent } from './features/theme-toggle/theme-toggle.compo
     AppHeaderComponent,
     TopNavComponent,
     HomeComponent,
-    ThemeToggleComponent
+    ThemeToggleComponent,
+    InvoiceUploadComponent
   ],
   imports: [
     BrowserModule,

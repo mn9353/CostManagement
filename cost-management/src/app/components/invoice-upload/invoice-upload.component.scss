@@ -1,0 +1,450 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ─── Page Shell ──────────────────────────────────────────────── */
+.invoice-upload-page {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+  background: var(--bg-primary);
+  transition: background-color var(--transition-speed);
+}
+
+.page-header {
+  padding: 20px 32px 0;
+
+  .page-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-heading);
+    transition: color var(--transition-speed);
+  }
+}
+
+/* ─── Scroll wrapper (title + content scroll together) ───────── */
+.scroll-area {
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* ─── Two-column layout ───────────────────────────────────────── */
+.content-layout {
+  display: flex;
+  gap: 20px;
+  padding: 16px 32px;
+  align-items: flex-start;
+}
+
+.form-column {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.preview-column {
+  width: 300px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ─── Section Cards ───────────────────────────────────────────── */
+.form-section {
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  padding: 18px 20px;
+  box-shadow: 0 2px 8px var(--card-shadow);
+  transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.section-title {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--accent-color);
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-color);
+  transition: color var(--transition-speed), border-color var(--transition-speed);
+}
+
+/* ─── Form Grid ───────────────────────────────────────────────── */
+.form-grid {
+  display: grid;
+  gap: 12px 16px;
+
+  &.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  &.cols-1 { grid-template-columns: 1fr; }
+
+  .col-span-2 { grid-column: span 2; }
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    transition: color var(--transition-speed);
+  }
+
+  input[type="text"],
+  input[type="number"],
+  input[type="date"],
+  select {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    border-radius: 6px;
+    padding: 7px 10px;
+    font-size: 13px;
+    width: 100%;
+    transition: border-color var(--transition-speed), background-color var(--transition-speed), color var(--transition-speed);
+    font-family: inherit;
+
+    &:focus {
+      outline: none;
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 3px rgba(46, 109, 164, 0.12);
+    }
+
+    &::placeholder { color: var(--text-muted); }
+  }
+
+  select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 28px;
+    cursor: pointer;
+  }
+}
+
+.checkbox-field {
+  justify-content: flex-end;
+
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-transform: none;
+    letter-spacing: 0;
+    cursor: pointer;
+    transition: color var(--transition-speed);
+
+    input[type="checkbox"] {
+      width: 15px;
+      height: 15px;
+      accent-color: var(--accent-color);
+      cursor: pointer;
+    }
+  }
+}
+
+/* ─── Add Line Button ─────────────────────────────────────────── */
+.add-line-row {
+  margin-top: 14px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-add-line {
+  background: transparent;
+  border: 1px dashed var(--accent-color);
+  color: var(--accent-color);
+  border-radius: 6px;
+  padding: 7px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+
+  &:hover {
+    background: var(--accent-color);
+    color: #fff;
+  }
+}
+
+/* ─── Monthly Recharge Grid ───────────────────────────────────── */
+.monthly-grid {
+  margin-top: 14px;
+  overflow-x: auto;
+}
+
+.monthly-header,
+.monthly-row {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.monthly-header {
+  margin-bottom: 6px;
+}
+
+.row-label {
+  width: 160px;
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-label);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding-right: 8px;
+  transition: color var(--transition-speed);
+}
+
+.month-cell {
+  flex: 1;
+  min-width: 38px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: center;
+  transition: color var(--transition-speed);
+
+  input[type="checkbox"] {
+    accent-color: var(--accent-color);
+    cursor: pointer;
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.monthly-row {
+  padding: 5px 0;
+  border-top: 1px solid var(--border-subtle);
+  transition: border-color var(--transition-speed);
+}
+
+/* ─── Forecast Table ──────────────────────────────────────────── */
+.forecast-table-wrap {
+  overflow-x: auto;
+}
+
+.forecast-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  min-width: 600px;
+
+  th {
+    padding: 8px 10px;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: var(--text-muted);
+    border-bottom: 2px solid var(--border-table);
+    transition: color var(--transition-speed), border-color var(--transition-speed);
+
+    &:first-child { text-align: left; }
+  }
+
+  td {
+    padding: 9px 10px;
+    text-align: center;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-subtle);
+    transition: color var(--transition-speed), border-color var(--transition-speed), background-color var(--transition-speed);
+
+    &:first-child {
+      text-align: left;
+      font-weight: 600;
+      color: var(--text-label);
+    }
+  }
+
+  tbody tr:hover td { background: var(--bg-hover); }
+  tr:last-child td { border-bottom: none; }
+}
+
+/* ─── Change History Table ────────────────────────────────────── */
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+
+  th {
+    padding: 7px 10px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: var(--text-muted);
+    border-bottom: 2px solid var(--border-table);
+    transition: color var(--transition-speed), border-color var(--transition-speed);
+  }
+
+  td { padding: 9px 10px; color: var(--text-secondary); }
+}
+
+.empty-row td {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 16px;
+  font-style: italic;
+  font-size: 12px;
+}
+
+/* ─── Upload Zone ─────────────────────────────────────────────── */
+.upload-zone {
+  border: 2px dashed var(--border-color);
+  border-radius: 10px;
+  padding: 28px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color var(--transition-speed), background-color var(--transition-speed);
+  min-height: 180px;
+
+  &.dragging {
+    border-color: var(--accent-color);
+    background: var(--bg-hover);
+  }
+
+  &.has-file {
+    border-style: solid;
+    border-color: var(--accent-color);
+    cursor: default;
+  }
+
+  .upload-icon {
+    color: var(--text-muted);
+    transition: color var(--transition-speed);
+  }
+
+  .upload-primary {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    transition: color var(--transition-speed);
+  }
+
+  .upload-secondary {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  .upload-hint {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+}
+
+.btn-browse {
+  background: var(--accent-color);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 7px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+
+  &:hover { opacity: 0.88; }
+}
+
+.file-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent-color);
+  width: 100%;
+
+  .file-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    word-break: break-all;
+    text-align: center;
+    transition: color var(--transition-speed);
+  }
+
+  .btn-remove {
+    background: var(--bg-hover);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+
+    &:hover {
+      background: var(--badge-overdue-bg);
+      color: var(--badge-overdue-color);
+      border-color: var(--badge-overdue-color);
+    }
+  }
+}
+
+/* ─── Action Footer ───────────────────────────────────────────── */
+.action-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 14px 32px;
+  border-top: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  transition: background-color var(--transition-speed), border-color var(--transition-speed);
+
+  button {
+    padding: 9px 28px;
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s, background-color var(--transition-speed);
+  }
+
+  .btn-save {
+    background: var(--accent-color);
+    color: #fff;
+    border: none;
+
+    &:hover { opacity: 0.88; }
+  }
+
+  .btn-cancel {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    transition: background-color var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed);
+
+    &:hover { background: var(--bg-hover); }
+  }
+}

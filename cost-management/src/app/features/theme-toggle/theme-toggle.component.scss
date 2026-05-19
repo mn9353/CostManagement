@@ -9,7 +9,8 @@
   align-items: center;
   justify-content: center;
   font-size: 1.1rem;
-  transition: background-color var(--transition-speed), border-color var(--transition-speed), box-shadow var(--transition-speed), transform 0.1s;
+  color: var(--text-heading);
+  transition: background-color var(--transition-speed), border-color var(--transition-speed), box-shadow var(--transition-speed), color var(--transition-speed), transform 0.1s;
   box-shadow: 0 1px 4px var(--card-shadow);
 
   &:hover {
