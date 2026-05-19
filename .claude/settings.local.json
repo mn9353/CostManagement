@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir *)",
+      "PowerShell(nvm version *)",
+      "Bash(nvm version *)",
+      "Bash(npm --version)",
+      "PowerShell(Test-Path *)",
+      "PowerShell(npx @angular/cli@14 new cost-management --routing true --style scss --skip-git --directory cost-management 2>&1 | Select-Object -First 50)",
+      "PowerShell(Get-Process *)"
+    ]
+  }
+}
