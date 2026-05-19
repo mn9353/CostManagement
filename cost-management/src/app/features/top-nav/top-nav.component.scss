@@ -1,0 +1,27 @@
+.top-nav {
+  display: flex;
+  background: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 0 40px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+
+  .nav-item {
+    padding: 14px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #555;
+    text-decoration: none;
+    border-bottom: 3px solid transparent;
+    transition: color 0.2s, border-bottom-color 0.2s;
+
+    &:hover {
+      color: #2e6da4;
+    }
+
+    &.active {
+      color: #2e6da4;
+      border-bottom-color: #2e6da4;
+      font-weight: 600;
+    }
+  }
+}
