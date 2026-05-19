@@ -1,0 +1,23 @@
+.theme-toggle {
+  width: 38px;
+  height: 38px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  transition: background-color var(--transition-speed), border-color var(--transition-speed), box-shadow var(--transition-speed), transform 0.1s;
+  box-shadow: 0 1px 4px var(--card-shadow);
+
+  &:hover {
+    box-shadow: 0 3px 10px var(--card-shadow-hover);
+    background: var(--bg-hover);
+  }
+
+  &:active {
+    transform: scale(0.92);
+  }
+}

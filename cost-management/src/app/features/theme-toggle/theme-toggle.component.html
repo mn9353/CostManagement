@@ -1,0 +1,8 @@
+<button
+  class="theme-toggle"
+  (click)="themeService.toggle()"
+  [attr.aria-label]="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
+  [title]="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
+>
+  {{ isDark ? '☀️' : '🌙' }}
+</button>

@@ -1,12 +1,95 @@
-/* You can add global styles to this file, and also import other style files */
+/* ─── Theme Variables ─────────────────────────────────────────── */
+:root {
+  --bg-primary: #f0f2f5;
+  --bg-secondary: #ffffff;
+  --bg-nav: #ffffff;
+  --bg-hover: #f7f9fc;
+  --text-heading: #1a3c5e;
+  --text-primary: #333;
+  --text-secondary: #444;
+  --text-label: #666;
+  --text-muted: #888;
+  --text-subtle: #999;
+  --border-color: #e0e0e0;
+  --border-subtle: #f0f0f0;
+  --border-table: #eee;
+  --accent-color: #2e6da4;
+  --card-shadow: rgba(0, 0, 0, 0.07);
+  --card-shadow-hover: rgba(0, 0, 0, 0.12);
+  --nav-shadow: rgba(0, 0, 0, 0.05);
+  --transition-speed: 0.07s;
+
+  --badge-paid-bg: #e6f4ea;
+  --badge-paid-color: #2e7d32;
+  --badge-pending-bg: #fff8e1;
+  --badge-pending-color: #f57c00;
+  --badge-overdue-bg: #fdecea;
+  --badge-overdue-color: #c62828;
+}
+
+[data-theme="dark"] {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-nav: #1e293b;
+  --bg-hover: #263248;
+  --text-heading: #e2e8f0;
+  --text-primary: #cbd5e1;
+  --text-secondary: #94a3b8;
+  --text-label: #94a3b8;
+  --text-muted: #64748b;
+  --text-subtle: #475569;
+  --border-color: #334155;
+  --border-subtle: #1e2d40;
+  --border-table: #2d3f55;
+  --accent-color: #60a5fa;
+  --card-shadow: rgba(0, 0, 0, 0.3);
+  --card-shadow-hover: rgba(0, 0, 0, 0.5);
+  --nav-shadow: rgba(0, 0, 0, 0.2);
+
+  --badge-paid-bg: #14532d;
+  --badge-paid-color: #86efac;
+  --badge-pending-bg: #431407;
+  --badge-pending-color: #fdba74;
+  --badge-overdue-bg: #450a0a;
+  --badge-overdue-color: #fca5a5;
+}
+
+/* ─── Reset ───────────────────────────────────────────────────── */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* ─── Base ────────────────────────────────────────────────────── */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f0f2f5;
-  color: #333;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+/* ─── Sleek Scrollbar ─────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 10px;
+  transition: background var(--transition-speed);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) transparent;
 }

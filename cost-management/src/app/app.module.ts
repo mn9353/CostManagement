@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { AppHeaderComponent } from './features/app-header/app-header.component';
 import { TopNavComponent } from './features/top-nav/top-nav.component';
 import { HomeComponent } from './components/home/home.component';
+import { ThemeToggleComponent } from './features/theme-toggle/theme-toggle.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AppHeaderComponent,
     TopNavComponent,
-    HomeComponent
+    HomeComponent,
+    ThemeToggleComponent
   ],
   imports: [
     BrowserModule,

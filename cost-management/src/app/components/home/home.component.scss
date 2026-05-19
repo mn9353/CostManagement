@@ -2,11 +2,15 @@
   display: flex;
   flex-direction: column;
   flex: 1;
+  overflow: hidden;
 }
 
 .app-main {
   flex: 1;
   padding: 32px 40px;
+  background: var(--bg-primary);
+  overflow-y: auto;
+  transition: background-color var(--transition-speed);
 }
 
 .dashboard-grid {
@@ -21,58 +25,64 @@
 }
 
 .card {
-  background: white;
+  background: var(--bg-secondary);
   border-radius: 10px;
   padding: 24px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  box-shadow: 0 2px 8px var(--card-shadow);
   text-align: center;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s, background-color var(--transition-speed);
 
   &:hover {
     transform: translateY(-3px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 6px 16px var(--card-shadow-hover);
   }
 
   .card-icon {
     font-size: 28px;
-    color: #2e6da4;
+    color: var(--accent-color);
     margin-bottom: 8px;
     font-weight: bold;
+    transition: color var(--transition-speed);
   }
 
   h3 {
     font-size: 14px;
     font-weight: 600;
-    color: #666;
+    color: var(--text-label);
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin-bottom: 8px;
+    transition: color var(--transition-speed);
   }
 
   .card-value {
     font-size: 30px;
     font-weight: 700;
-    color: #1a3c5e;
+    color: var(--text-heading);
     margin-bottom: 4px;
+    transition: color var(--transition-speed);
   }
 
   .card-label {
     font-size: 12px;
-    color: #999;
+    color: var(--text-subtle);
+    transition: color var(--transition-speed);
   }
 }
 
 .invoice-table-section {
-  background: white;
+  background: var(--bg-secondary);
   border-radius: 10px;
   padding: 28px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  box-shadow: 0 2px 8px var(--card-shadow);
+  transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
 
   h2 {
     font-size: 18px;
     font-weight: 600;
-    color: #1a3c5e;
+    color: var(--text-heading);
     margin-bottom: 20px;
+    transition: color var(--transition-speed);
   }
 }
 
@@ -87,15 +97,17 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    color: #888;
-    border-bottom: 2px solid #eee;
+    color: var(--text-muted);
+    border-bottom: 2px solid var(--border-table);
+    transition: color var(--transition-speed), border-color var(--transition-speed);
   }
 
   td {
     padding: 14px 16px;
     font-size: 14px;
-    border-bottom: 1px solid #f0f0f0;
-    color: #444;
+    border-bottom: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    transition: color var(--transition-speed), border-color var(--transition-speed), background-color var(--transition-speed);
   }
 
   tr:last-child td {
@@ -103,7 +115,7 @@
   }
 
   tbody tr:hover td {
-    background-color: #f7f9fc;
+    background-color: var(--bg-hover);
   }
 }
 
@@ -113,19 +125,20 @@
   border-radius: 20px;
   font-size: 12px;
   font-weight: 600;
+  transition: background-color var(--transition-speed), color var(--transition-speed);
 
   &.badge-paid {
-    background-color: #e6f4ea;
-    color: #2e7d32;
+    background-color: var(--badge-paid-bg);
+    color: var(--badge-paid-color);
   }
 
   &.badge-pending {
-    background-color: #fff8e1;
-    color: #f57c00;
+    background-color: var(--badge-pending-bg);
+    color: var(--badge-pending-color);
   }
 
   &.badge-overdue {
-    background-color: #fdecea;
-    color: #c62828;
+    background-color: var(--badge-overdue-bg);
+    color: var(--badge-overdue-color);
   }
 }

@@ -11,7 +11,9 @@
       "PowerShell(npm *)",
       "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\Inno\\\\source\\\\Crown\\\\CostManagement\" -Recurse -Force)",
       "Bash(Select-Object FullName)",
-      "Bash(Get-ChildItem *)"
+      "Bash(Get-ChildItem *)",
+      "PowerShell(head *)",
+      "Bash(npx ng *)"
     ]
   }
 }
