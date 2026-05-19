@@ -25,6 +25,22 @@
   --badge-pending-color: #f57c00;
   --badge-overdue-bg: #fdecea;
   --badge-overdue-color: #c62828;
+
+  /* ── Forecast table colors ── */
+  --forecast-id-bg: #dff6fb;
+  --forecast-id-border: #93d9ea;
+  --forecast-id-text: #0c4a6e;
+  --forecast-local-bg: #e0f9fb;
+  --forecast-local-text: #0e6674;
+  --forecast-local-border: #67d8e8;
+  --forecast-site-bg: #eff6ff;
+  --forecast-site-text: #1e40af;
+  --forecast-site-border: #93c5fd;
+  --forecast-total-bg: #1a3c5e;
+  --forecast-total-text: #ffffff;
+  --forecast-total-rounded-bg: #0f2d4a;
+  --btn-success-bg: #16a34a;
+  --btn-danger-bg: #dc2626;
 }
 
 [data-theme="dark"] {
@@ -52,6 +68,22 @@
   --badge-pending-color: #fdba74;
   --badge-overdue-bg: #450a0a;
   --badge-overdue-color: #fca5a5;
+
+  /* ── Forecast table colors ── */
+  --forecast-id-bg: #0c3a4f;
+  --forecast-id-border: #0e6080;
+  --forecast-id-text: #67e8f9;
+  --forecast-local-bg: #083344;
+  --forecast-local-text: #67e8f9;
+  --forecast-local-border: #0e6674;
+  --forecast-site-bg: #0c1d40;
+  --forecast-site-text: #93c5fd;
+  --forecast-site-border: #1e40af;
+  --forecast-total-bg: #0a1628;
+  --forecast-total-text: #e2e8f0;
+  --forecast-total-rounded-bg: #060e1a;
+  --btn-success-bg: #16a34a;
+  --btn-danger-bg: #dc2626;
 }
 
 /* ─── Reset ───────────────────────────────────────────────────── */
