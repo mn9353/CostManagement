@@ -12,78 +12,65 @@
         <label>Internal Order</label>
         <select [(ngModel)]="filters.internalOrder">
           <option value="">All</option>
-          <option>IO-4001</option>
-          <option>IO-4002</option>
-          <option>IO-4003</option>
-          <option>IO-4004</option>
+          <option>IO-4001</option><option>IO-4002</option>
+          <option>IO-4003</option><option>IO-4004</option>
         </select>
       </div>
       <div class="filter-group">
         <label>Type</label>
         <select [(ngModel)]="filters.type">
           <option value="">All</option>
-          <option>OPEX</option>
-          <option>CAPEX</option>
+          <option>OPEX</option><option>CAPEX</option>
         </select>
       </div>
       <div class="filter-group">
         <label>Account</label>
         <select [(ngModel)]="filters.account">
           <option value="">All</option>
-          <option>Account A</option>
-          <option>Account B</option>
+          <option>Account A</option><option>Account B</option>
         </select>
       </div>
       <div class="filter-group">
         <label>Team</label>
         <select [(ngModel)]="filters.team">
           <option value="">All</option>
-          <option>Digital</option>
-          <option>Operations</option>
-          <option>Finance</option>
-          <option>Projects</option>
+          <option>Digital</option><option>Operations</option>
+          <option>Finance</option><option>Projects</option>
         </select>
       </div>
       <div class="filter-group">
         <label>Category</label>
         <select [(ngModel)]="filters.category">
           <option value="">All</option>
-          <option>Software</option>
-          <option>Infrastructure</option>
-          <option>Consulting</option>
-          <option>Services</option>
+          <option>Software</option><option>Infrastructure</option>
+          <option>Consulting</option><option>Services</option>
         </select>
       </div>
       <div class="filter-group">
         <label>Spend Type</label>
         <select [(ngModel)]="filters.spendType">
           <option value="">All</option>
-          <option>Direct</option>
-          <option>Indirect</option>
+          <option>Direct</option><option>Indirect</option>
         </select>
       </div>
       <div class="filter-group">
         <label>Supplier</label>
         <select [(ngModel)]="filters.supplier">
           <option value="">All</option>
-          <option>Microsoft</option>
-          <option>AWS</option>
-          <option>Deloitte</option>
-          <option>Accenture</option>
+          <option>Microsoft</option><option>AWS</option>
+          <option>Deloitte</option><option>Accenture</option>
         </select>
       </div>
       <div class="filter-group">
         <label>Currency</label>
         <select [(ngModel)]="filters.currency">
           <option value="">All</option>
-          <option>AUD</option>
-          <option>USD</option>
-          <option>EUR</option>
+          <option>AUD</option><option>USD</option><option>EUR</option>
         </select>
       </div>
     </div>
 
-    <!-- Toolbar: year nav + add row -->
+    <!-- Toolbar -->
     <div class="table-toolbar">
       <div class="year-nav">
         <button class="year-btn" (click)="prevYear()">&#8249;</button>
@@ -93,142 +80,154 @@
       <button class="btn-add-row" (click)="addRow()">+ Add Row</button>
     </div>
 
-    <!-- Forecast Table -->
-    <div class="table-outer">
-      <div class="table-wrapper">
-        <table class="forecast-table">
-          <thead>
-            <tr class="thead-year">
-              <th class="s-c0"></th>
-              <th class="s-c1"></th>
-              <th class="s-c2"></th>
-              <th class="s-c3"></th>
-              <th class="s-c4"></th>
-              <th class="s-c5"></th>
-              <th class="s-c6"></th>
-              <th colspan="12" class="year-span">{{ currentYear }}</th>
-              <th class="col-total"></th>
-              <th class="col-action"></th>
-            </tr>
-            <tr class="thead-cols">
-              <th class="s-c0">Internal Order</th>
-              <th class="s-c1">Team</th>
-              <th class="s-c2">Type</th>
-              <th class="s-c3">Category</th>
-              <th class="s-c4">Supplier</th>
-              <th class="s-c5">Description</th>
-              <th class="s-c6">Curr</th>
-              <th *ngFor="let m of months" class="col-month">{{ m }}</th>
-              <th class="col-total">Total</th>
-              <th class="col-action"></th>
-            </tr>
-          </thead>
+    <!-- Two-table layout -->
+    <div class="tables-outer">
+      <div class="tables-container">
 
-          <tbody>
-            <ng-container *ngFor="let row of forecastRows; let ri = index">
-              <tr *ngFor="let sub of row.subRows; let si = index"
-                  [class.row-first]="si === 0"
-                  [class.row-sub]="si > 0"
-                  [class.row-last-sub]="si === row.subRows.length - 1"
-                  [class.sub-local]="si === 0"
-                  [class.sub-site]="si === 1">
-
-                <!-- Identity cells — only on first sub-row, span all 3 -->
-                <ng-container *ngIf="si === 0">
-                  <td [attr.rowspan]="row.subRows.length" class="s-c0 id-cell id-accent">
-                    <input type="text" [(ngModel)]="row.internalOrder" placeholder="IO-" />
-                  </td>
-                  <td [attr.rowspan]="row.subRows.length" class="s-c1 id-cell id-accent">
-                    <select [(ngModel)]="row.team">
-                      <option value="">—</option>
-                      <option>Digital</option>
-                      <option>Operations</option>
-                      <option>Finance</option>
-                      <option>Projects</option>
-                    </select>
-                  </td>
-                  <td [attr.rowspan]="row.subRows.length" class="s-c2 id-cell id-accent">
-                    <select [(ngModel)]="row.type">
-                      <option value="">—</option>
-                      <option>OPEX</option>
-                      <option>CAPEX</option>
-                    </select>
-                  </td>
-                  <td [attr.rowspan]="row.subRows.length" class="s-c3 id-cell id-accent">
-                    <select [(ngModel)]="row.category">
-                      <option value="">—</option>
-                      <option>Software</option>
-                      <option>Infrastructure</option>
-                      <option>Consulting</option>
-                      <option>Services</option>
-                    </select>
-                  </td>
-                  <td [attr.rowspan]="row.subRows.length" class="s-c4 id-cell id-accent">
-                    <input type="text" [(ngModel)]="row.supplier" placeholder="Supplier" />
-                  </td>
-                </ng-container>
-
-                <!-- Sub-row label (always rendered — sits in Description column) -->
-                <td class="s-c5 sub-label-cell">{{ sub.label }}</td>
-
-                <!-- Currency — only on first sub-row, spans all 3 -->
-                <ng-container *ngIf="si === 0">
-                  <td [attr.rowspan]="row.subRows.length" class="s-c6 id-cell id-accent">
-                    <select [(ngModel)]="row.currency">
-                      <option>AUD</option>
-                      <option>USD</option>
-                      <option>EUR</option>
-                      <option>GBP</option>
-                    </select>
-                  </td>
-                </ng-container>
-
-                <!-- Monthly value cells -->
-                <td *ngFor="let val of sub.values; let mi = index" class="col-month value-cell">
-                  <input type="number" [(ngModel)]="sub.values[mi]" placeholder="" />
-                </td>
-
-                <!-- Sub-row total -->
-                <td class="col-total sub-total">{{ fmt(getSubRowTotal(sub.values)) || '—' }}</td>
-
-                <!-- Remove button — only on first sub-row, spans all 3 -->
-                <ng-container *ngIf="si === 0">
-                  <td [attr.rowspan]="row.subRows.length" class="col-action">
-                    <button class="btn-del" (click)="removeRow(row.id)" title="Remove row">&#x2715;</button>
-                  </td>
-                </ng-container>
-
+        <!-- ── LEFT TABLE: identity columns ────────────────────── -->
+        <div class="left-table-wrap">
+          <table class="left-table">
+            <thead>
+              <tr class="thead-spacer"><th colspan="7"></th></tr>
+              <tr class="thead-cols">
+                <th class="lc-io">Internal Order</th>
+                <th class="lc-team">Team</th>
+                <th class="lc-type">Type</th>
+                <th class="lc-cat">Category</th>
+                <th class="lc-sup">Supplier</th>
+                <th class="lc-curr">Curr</th>
+                <th class="lc-act"></th>
               </tr>
-            </ng-container>
-          </tbody>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let row of forecastRows">
+                <tr *ngFor="let sub of row.subRows; let si = index"
+                    [class.row-first]="si === 0"
+                    [class.row-last-sub]="si === row.subRows.length - 1">
 
-          <tfoot>
-            <tr class="total-row">
-              <td class="s-c0 total-label" colspan="6">TOTAL (Account)</td>
-              <td class="s-c6 total-curr"></td>
-              <td *ngFor="let m of months; let mi = index" class="col-month total-val">
-                {{ fmt(getColTotal(mi)) }}
-              </td>
-              <td class="col-total total-val grand">{{ fmt(getGrandTotal()) }}</td>
-              <td class="col-action"></td>
-            </tr>
-            <tr class="total-row total-rounded">
-              <td class="s-c0 total-label" colspan="6">TOTAL ROUNDED (Account)</td>
-              <td class="s-c6 total-curr"></td>
-              <td *ngFor="let m of months; let mi = index" class="col-month total-val">
-                {{ fmt(roundToK(getColTotal(mi))) }}
-              </td>
-              <td class="col-total total-val grand">{{ fmt(roundToK(getGrandTotal())) }}</td>
-              <td class="col-action"></td>
-            </tr>
-          </tfoot>
-        </table>
+                  <!-- First sub-row: show editable fields -->
+                  <ng-container *ngIf="si === 0">
+                    <td class="lc-io id-cell id-accent">
+                      <input type="text" [(ngModel)]="row.internalOrder" placeholder="IO-" />
+                    </td>
+                    <td class="lc-team id-cell id-accent">
+                      <select [(ngModel)]="row.team">
+                        <option value="">—</option>
+                        <option>Digital</option><option>Operations</option>
+                        <option>Finance</option><option>Projects</option>
+                      </select>
+                    </td>
+                    <td class="lc-type id-cell id-accent">
+                      <select [(ngModel)]="row.type">
+                        <option value="">—</option>
+                        <option>OPEX</option><option>CAPEX</option>
+                      </select>
+                    </td>
+                    <td class="lc-cat id-cell id-accent">
+                      <select [(ngModel)]="row.category">
+                        <option value="">—</option>
+                        <option>Software</option><option>Infrastructure</option>
+                        <option>Consulting</option><option>Services</option>
+                      </select>
+                    </td>
+                    <td class="lc-sup id-cell id-accent">
+                      <input type="text" [(ngModel)]="row.supplier" placeholder="Supplier" />
+                    </td>
+                    <td class="lc-curr id-cell id-accent">
+                      <select [(ngModel)]="row.currency">
+                        <option>AUD</option><option>USD</option>
+                        <option>EUR</option><option>GBP</option>
+                      </select>
+                    </td>
+                    <td class="lc-act">
+                      <button class="btn-del" (click)="removeRow(row.id)" title="Remove">&#x2715;</button>
+                    </td>
+                  </ng-container>
+
+                  <!-- Sub-rows 2 & 3: empty cells to maintain row height -->
+                  <ng-container *ngIf="si > 0">
+                    <td class="lc-io sub-empty"></td>
+                    <td class="lc-team sub-empty"></td>
+                    <td class="lc-type sub-empty"></td>
+                    <td class="lc-cat sub-empty"></td>
+                    <td class="lc-sup sub-empty"></td>
+                    <td class="lc-curr sub-empty"></td>
+                    <td class="lc-act"></td>
+                  </ng-container>
+
+                </tr>
+              </ng-container>
+            </tbody>
+            <tfoot>
+              <tr class="total-row">
+                <td colspan="6" class="total-label">TOTAL (Account)</td>
+                <td></td>
+              </tr>
+              <tr class="total-row total-rounded">
+                <td colspan="6" class="total-label">TOTAL ROUNDED (Account)</td>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <!-- ── RIGHT TABLE: forecast months ───────────────────── -->
+        <div class="right-table-wrap">
+          <table class="right-table">
+            <thead>
+              <tr class="thead-year">
+                <th class="rc-label"></th>
+                <th colspan="12" class="year-span">{{ currentYear }}</th>
+                <th class="rc-total">Total</th>
+              </tr>
+              <tr class="thead-cols">
+                <th class="rc-label">Description</th>
+                <th *ngFor="let m of months" class="rc-month">{{ m }}</th>
+                <th class="rc-total">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let row of forecastRows">
+                <tr *ngFor="let sub of row.subRows; let si = index"
+                    [class.row-first]="si === 0"
+                    [class.row-last-sub]="si === row.subRows.length - 1"
+                    [class.sub-local]="si === 0"
+                    [class.sub-site]="si === 1">
+
+                  <td class="rc-label sub-label-cell">{{ sub.label }}</td>
+
+                  <td *ngFor="let val of sub.values; let mi = index" class="rc-month value-cell">
+                    <input type="number" [(ngModel)]="sub.values[mi]" placeholder="" />
+                  </td>
+
+                  <td class="rc-total sub-total">{{ fmt(getSubRowTotal(sub.values)) || '—' }}</td>
+                </tr>
+              </ng-container>
+            </tbody>
+            <tfoot>
+              <tr class="total-row">
+                <td class="rc-label total-label"></td>
+                <td *ngFor="let m of months; let mi = index" class="rc-month total-val">
+                  {{ fmt(getColTotal(mi)) }}
+                </td>
+                <td class="rc-total total-val grand">{{ fmt(getGrandTotal()) }}</td>
+              </tr>
+              <tr class="total-row total-rounded">
+                <td class="rc-label total-label"></td>
+                <td *ngFor="let m of months; let mi = index" class="rc-month total-val">
+                  {{ fmt(roundToK(getColTotal(mi))) }}
+                </td>
+                <td class="rc-total total-val grand">{{ fmt(roundToK(getGrandTotal())) }}</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
       </div>
     </div>
 
   </div><!-- /scroll-area -->
 
-  <!-- Action Footer -->
   <div class="action-footer">
     <button class="btn-cancel">Cancel</button>
     <button class="btn-save">Save</button>

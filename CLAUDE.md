@@ -204,3 +204,54 @@ background: var(--bg-primary);
 border: 1px solid var(--border-color);
 color: var(--text-primary);
 ```
+
+---
+
+## Business Domain Rules
+
+These rules govern how the application must behave. Always refer to them when building or extending any feature.
+
+### Process & Budget
+- Budget is the starting point of the entire application — set every September–October for the following year across all four EISS teams: **Infrastructure, Applications, Governance & Vendor, Model & Processes**
+- Budget is not an approval to spend — a separate **PAR (Purchase Approval Request)** must be raised before any costs are committed; the application only stores the PAR number
+- All figures are in **GBP** as the primary currency, with a **USD conversion column** displayed alongside
+
+### Invoice Handling
+- Invoice upload (PDF) is mandatory — JPEG is not required
+- Invoice number has no fixed format or length
+- **Duplicate detection** is based on the combination of **invoice number + vendor** (not invoice number alone); on detection, show the existing entry before allowing an update
+- Multi-month invoice spreading is always an **even split** across the invoice period
+- **Credit notes**: both the original invoice and the credit must be visible on the same cost line so the full path is traceable; credit is recorded as a **negative amount** against actuals
+
+### Accruals
+- When an invoice is delayed, the system must allow flagging of that line so the finance team can be instructed to make an accrual for that month
+- A report must be generated showing **Supplier, Spend Type, and Amount to accrue per month** — sent to the finance team
+- Each invoice line must have a **paid / unpaid flag** to indicate whether the invoice has physically left Crown's accounts
+
+### Recharge
+- **Block save** if recharge allocations do not sum to 100% — no delta posting; it must balance exactly
+- Recharge lines must **not** appear in a cost centre manager's RFC — a separate dedicated view is needed for recharge instructions to the business
+
+### Forecast & RFC
+- There are exactly **three RFC cycles per year**: RFC1 (Jan–Mar locked), RFC2 (Jan–Jun locked), RFC3 (Jul–Sep forecast)
+- If overspend exceeds the PAR, a **new budget line with a new PAR** must be added — the existing line cannot be increased
+- Recharge lines are excluded from the RFC copy — they belong to a separate view
+
+### Cost Centre Comparison View
+- Fully dynamic: user selects a scenario, then freely picks which data columns to display (Actual 2024, Actual 2025, RFC1, Budget, etc.) by ticking/unticking from a dropdown
+- User can add **variance comparison columns** by selecting any two financial columns (e.g. Budget minus RFC1, Actuals minus Budget) — comparisons are fully flexible, not fixed
+- Inline colour-coded variance: **red = overspend, green = on/under budget**
+- Column configuration and comparisons are **saved per user** and restored exactly when they return to the screen
+
+### Headcount
+- Tracked as **binary per employee per month** (1 = present, 0 = absent) — no fractional values
+- Employee types: **Full Time, Part Time, VIE, TBA** (placeholder for unfilled roles)
+- Must track people across multiple locations: **UK, Turkey, Spain**, and other Crown sites
+- Follows the same Budget / RFC cycle as financial forecasting
+
+### Power BI Dashboards (confirmed requirements)
+- Spend by cost type
+- Spend by vendor
+- Spend across teams
+- Actuals vs. Budget trend (graph format for leadership)
+- Source of Change report

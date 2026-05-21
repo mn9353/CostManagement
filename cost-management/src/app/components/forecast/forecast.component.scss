@@ -1,12 +1,3 @@
-/* ─── Sticky column left offsets ─────────────────────────────── */
-$c0: 0px;
-$c1: 110px;
-$c2: 200px;
-$c3: 278px;
-$c4: 368px;
-$c5: 478px;
-$c6: 648px;
-
 /* ─── Page shell (CLAUDE.md pattern) ─────────────────────────── */
 :host {
   display: flex;
@@ -68,7 +59,7 @@ $c6: 648px;
   }
 
   select {
-    background: var(--bg-primary);
+    background-color: var(--bg-primary);
     border: 1px solid var(--border-color);
     color: var(--text-primary);
     border-radius: 5px;
@@ -76,9 +67,9 @@ $c6: 648px;
     font-size: 12px;
     font-family: inherit;
     appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='%23444' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
-    background-position: right 7px center;
+    background-position: right 8px center;
     cursor: pointer;
     transition: border-color var(--transition-speed), background-color var(--transition-speed), color var(--transition-speed);
 
@@ -148,93 +139,109 @@ $c6: 648px;
   &:hover { opacity: 0.85; }
 }
 
-/* ─── Table container ─────────────────────────────────────────── */
-.table-outer {
+/* ─── Two-table layout ────────────────────────────────────────── */
+.tables-outer {
   padding: 0 24px 24px;
 }
 
-.table-wrapper {
-  overflow-x: auto;
+.tables-container {
+  display: flex;
+  align-items: flex-start;
+}
+
+.left-table-wrap {
+  flex-shrink: 0;
+  overflow: hidden;
   border: 1px solid var(--border-color);
-  border-radius: 10px;
+  border-right: none;
+  border-radius: 10px 0 0 10px;
   transition: border-color var(--transition-speed);
 }
 
-/* ─── Table core ──────────────────────────────────────────────── */
-.forecast-table {
-  width: 100%;
+.right-table-wrap {
+  flex: 1;
+  overflow-x: auto;
+  border: 1px solid var(--border-color);
+  border-radius: 0 10px 10px 0;
+  transition: border-color var(--transition-speed);
+}
+
+/* ─── Table base ──────────────────────────────────────────────── */
+.left-table,
+.right-table {
   border-collapse: separate;
   border-spacing: 0;
   font-size: 12px;
-
-  /* ── Sticky column helpers ─── */
-  .s-c0 { position: sticky; left: $c0; z-index: 2; }
-  .s-c1 { position: sticky; left: $c1; z-index: 2; }
-  .s-c2 { position: sticky; left: $c2; z-index: 2; }
-  .s-c3 { position: sticky; left: $c3; z-index: 2; }
-  .s-c4 { position: sticky; left: $c4; z-index: 2; }
-  .s-c5 { position: sticky; left: $c5; z-index: 2; }
-  .s-c6 { position: sticky; left: $c6; z-index: 2; }
-
-  /* ── Column widths ─── */
-  .s-c0  { min-width: 110px; width: 110px; }
-  .s-c1  { min-width: 90px;  width: 90px;  }
-  .s-c2  { min-width: 78px;  width: 78px;  }
-  .s-c3  { min-width: 90px;  width: 90px;  }
-  .s-c4  { min-width: 110px; width: 110px; }
-  .s-c5  { min-width: 170px; width: 170px; }
-  .s-c6  { min-width: 65px;  width: 65px;  }
-  .col-month  { min-width: 75px;  width: 75px;  text-align: right; }
-  .col-total  { min-width: 90px;  width: 90px;  text-align: right; }
-  .col-action { min-width: 40px;  width: 40px;  text-align: center; }
+  min-width: 100%;
 }
+
+/* ─── Column widths: left table ───────────────────────────────── */
+.lc-io   { width: 110px; min-width: 110px; }
+.lc-team { width: 90px;  min-width: 90px;  }
+.lc-type { width: 78px;  min-width: 78px;  }
+.lc-cat  { width: 90px;  min-width: 90px;  }
+.lc-sup  { width: 110px; min-width: 110px; }
+.lc-curr { width: 65px;  min-width: 65px;  }
+.lc-act  { width: 40px;  min-width: 40px;  text-align: center; }
+
+/* ─── Column widths: right table ──────────────────────────────── */
+.rc-label { width: 170px; min-width: 170px; }
+.rc-month { width: 75px;  min-width: 75px;  text-align: right; }
+.rc-total { width: 90px;  min-width: 90px;  text-align: right; }
 
 /* ─── Thead ───────────────────────────────────────────────────── */
-.thead-year {
-  th {
-    background: var(--bg-secondary);
-    border-bottom: 1px solid var(--border-color);
-    border-right: 1px solid var(--border-color);
-    padding: 6px 8px;
-    transition: background-color var(--transition-speed), border-color var(--transition-speed);
 
-    &:first-child { border-left: 1px solid var(--border-color); }
-    &:last-child  { border-right: none; }
-  }
-
-  .year-span {
-    text-align: center;
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--accent-color);
-    border-top: 1px solid var(--border-color);
-    transition: color var(--transition-speed);
-  }
+/* Left table spacer row — height matches right table .thead-year */
+.thead-spacer th {
+  height: 30px;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color var(--transition-speed), border-color var(--transition-speed);
 }
 
-.thead-cols {
-  th {
-    background: var(--bg-secondary);
-    border-bottom: 2px solid var(--border-color);
-    border-right: 1px solid var(--border-color);
-    padding: 8px 8px;
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
-    color: var(--text-muted);
-    white-space: nowrap;
-    transition: background-color var(--transition-speed), border-color var(--transition-speed), color var(--transition-speed);
+/* Right table year row */
+.thead-year th {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  padding: 6px 8px;
+  height: 30px;
+  transition: background-color var(--transition-speed), border-color var(--transition-speed);
 
-    &:first-child { border-left: 1px solid var(--border-color); }
-    &:last-child  { border-right: none; }
+  &:last-child { border-right: none; }
+}
 
-    &.col-month { text-align: center; }
-    &.col-total { text-align: center; color: var(--text-heading); }
-  }
+.thead-year .year-span {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent-color);
+  transition: color var(--transition-speed);
+}
+
+/* Both tables: column header row */
+.thead-cols th {
+  background: var(--bg-secondary);
+  border-bottom: 2px solid var(--border-color);
+  border-right: 1px solid var(--border-color);
+  padding: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  transition: background-color var(--transition-speed), border-color var(--transition-speed), color var(--transition-speed);
+
+  &:last-child { border-right: none; }
+  &.rc-month   { text-align: center; }
+  &.rc-total   { text-align: center; color: var(--text-heading); }
 }
 
 /* ─── Tbody ───────────────────────────────────────────────────── */
+tbody tr {
+  height: 34px;
+}
+
 tbody tr td {
   border-bottom: 1px solid var(--border-subtle);
   border-right: 1px solid var(--border-subtle);
@@ -243,11 +250,9 @@ tbody tr td {
   background: var(--bg-secondary);
   transition: background-color var(--transition-speed), border-color var(--transition-speed);
 
-  &:first-child { border-left: 1px solid var(--border-color); }
-  &:last-child  { border-right: none; }
+  &:last-child { border-right: none; }
 }
 
-/* Group separator — thicker top border on first sub-row */
 tr.row-first td {
   border-top: 2px solid var(--border-color);
 }
@@ -256,18 +261,29 @@ tr.row-last-sub td {
   border-bottom: 2px solid var(--border-color);
 }
 
-/* Editable identity cells */
+/* ─── Empty sub-cells in left table (si > 0) ─────────────────── */
+.sub-empty {
+  background: var(--bg-secondary) !important;
+}
+
+/* ─── Editable identity cells ─────────────────────────────────── */
 .id-cell {
+  overflow: hidden;
+
   input[type="text"],
   select {
     width: 100%;
-    background: var(--bg-primary);
+    min-width: 0;
+    background-color: var(--bg-primary);
     border: 1px solid var(--border-color);
     color: var(--text-primary);
     border-radius: 4px;
     padding: 4px 6px;
     font-size: 11px;
     font-family: inherit;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     transition: border-color var(--transition-speed), background-color var(--transition-speed), color var(--transition-speed);
 
     &:focus {
@@ -279,52 +295,46 @@ tr.row-last-sub td {
 
   select {
     appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='9' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%23444' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
-    background-position: right 5px center;
-    padding-right: 18px;
+    background-position: right 6px center;
+    padding-right: 20px;
     cursor: pointer;
   }
 }
 
-/* ── Identity cells: color only the input/select elements ── */
 .id-accent {
   input[type="text"],
   select {
-    background: var(--forecast-id-bg);
+    background-color: var(--forecast-id-bg);
     border-color: var(--forecast-id-border);
     color: var(--forecast-id-text);
     transition: background-color var(--transition-speed), border-color var(--transition-speed), color var(--transition-speed);
 
     &:focus { border-color: var(--forecast-local-border); }
   }
+
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%230c4a6e' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 6px center;
+  }
 }
 
-/* ── Value cells: color only the number inputs ── */
-
-/* Forecast in Local Currency (si=0) */
-tr.sub-local .value-cell input[type="number"] {
-  background: var(--forecast-local-bg);
-  border: 1px solid var(--forecast-local-border);
-  color: var(--forecast-local-text);
-  border-radius: 3px;
-  transition: background-color var(--transition-speed), border-color var(--transition-speed), color var(--transition-speed);
-
-  &:focus { border-color: var(--forecast-local-text); }
+/* ─── Dark-mode chevron overrides ─────────────────────────────── */
+:host-context([data-theme="dark"]) .filter-group select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='%23aaa' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
 }
 
-/* Forecast in Site Currency (si=1) */
-tr.sub-site .value-cell input[type="number"] {
-  background: var(--forecast-site-bg);
-  border: 1px solid var(--forecast-site-border);
-  color: var(--forecast-site-text);
-  border-radius: 3px;
-  transition: background-color var(--transition-speed), border-color var(--transition-speed), color var(--transition-speed);
-
-  &:focus { border-color: var(--forecast-site-text); }
+:host-context([data-theme="dark"]) .id-cell select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%23aaa' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
 }
 
-/* Sub-row label cell */
+:host-context([data-theme="dark"]) .id-accent select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%2367e8f9' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+}
+
+/* ─── Sub-row label (right table description) ─────────────────── */
 .sub-label-cell {
   font-size: 11px;
   font-style: italic;
@@ -334,11 +344,16 @@ tr.sub-site .value-cell input[type="number"] {
   transition: color var(--transition-speed);
 }
 
-/* Value cells (editable numbers) */
+/* ─── Value cells (right table month inputs) ──────────────────── */
 .value-cell {
+  overflow: hidden;
+  max-width: 75px;
+
   input[type="number"] {
+    display: block;
     width: 100%;
-    background: transparent;
+    box-sizing: border-box;
+    background-color: var(--bg-secondary);
     border: 1px solid transparent;
     color: var(--text-secondary);
     border-radius: 3px;
@@ -348,28 +363,46 @@ tr.sub-site .value-cell input[type="number"] {
     text-align: right;
     transition: border-color var(--transition-speed), background-color var(--transition-speed), color var(--transition-speed);
 
-    /* Remove spinner arrows */
     &::-webkit-outer-spin-button,
     &::-webkit-inner-spin-button { appearance: none; }
 
     &:focus {
       outline: none;
       border-color: var(--accent-color);
-      background: var(--bg-hover);
+      background-color: var(--bg-hover);
     }
   }
 }
 
-/* Sub-row total */
+/* Forecast in Local Currency (si=0, sub-local) */
+tr.sub-local .value-cell input[type="number"] {
+  background-color: var(--forecast-local-bg);
+  border: 1px solid var(--forecast-local-border);
+  color: var(--forecast-local-text);
+
+  &:focus { border-color: var(--forecast-local-text); }
+}
+
+/* Forecast in Site Currency (si=1, sub-site) */
+tr.sub-site .value-cell input[type="number"] {
+  background-color: var(--forecast-site-bg);
+  border: 1px solid var(--forecast-site-border);
+  color: var(--forecast-site-text);
+
+  &:focus { border-color: var(--forecast-site-text); }
+}
+
+/* ─── Sub-row total ───────────────────────────────────────────── */
 .sub-total {
   font-size: 12px;
   font-weight: 600;
   color: var(--text-secondary);
+  text-align: right;
   padding-right: 8px !important;
   transition: color var(--transition-speed);
 }
 
-/* Remove button — always red */
+/* ─── Remove button ───────────────────────────────────────────── */
 .btn-del {
   background: var(--btn-danger-bg);
   border: none;
@@ -382,19 +415,23 @@ tr.sub-site .value-cell input[type="number"] {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: auto;
   transition: opacity 0.15s;
 
   &:hover { opacity: 0.8; }
 }
 
 /* ─── Tfoot ───────────────────────────────────────────────────── */
+tfoot tr {
+  height: 36px;
+}
+
 tfoot .total-row td {
   border-right: 1px solid rgba(255, 255, 255, 0.1);
   padding: 8px 6px;
   transition: background-color var(--transition-speed), color var(--transition-speed);
 
-  &:first-child { border-left: 1px solid var(--border-color); }
-  &:last-child  { border-right: none; }
+  &:last-child { border-right: none; }
 }
 
 .total-row {
@@ -432,7 +469,7 @@ tfoot .total-row td {
   .total-val.grand { color: #93c5fd; }
 }
 
-/* ─── Action Footer (CLAUDE.md pattern) ──────────────────────── */
+/* ─── Action footer (CLAUDE.md pattern) ──────────────────────── */
 .action-footer {
   display: flex;
   justify-content: flex-end;
