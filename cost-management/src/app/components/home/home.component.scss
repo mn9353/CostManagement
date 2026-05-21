@@ -13,6 +13,42 @@
   transition: background-color var(--transition-speed);
 }
 
+.dashboard-actions {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+
+  .btn-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent-color);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(46, 109, 164, 0.25);
+    transition: background-color var(--transition-speed), transform 0.2s, box-shadow 0.2s;
+
+    &:hover {
+      background: #20507a;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(46, 109, 164, 0.35);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+
+    .btn-icon {
+      stroke-width: 2.5px;
+    }
+  }
+}
+
 .dashboard-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
