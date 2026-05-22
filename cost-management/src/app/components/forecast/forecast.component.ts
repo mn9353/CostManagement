@@ -1,21 +1,10 @@
-import { Component } from '@angular/core';
-
-interface SubRow {
-  label: string;
-  values: (number | null)[];
-}
-
-interface ForecastRow {
-  id: number;
-  internalOrder: string;
-  team: string;
-  type: string;
-  category: string;
-  supplier: string;
-  description: string;
-  currency: string;
-  subRows: SubRow[];
-}
+import { Component, HostListener } from '@angular/core';
+import {
+  MONTHS, SITES, TEAMS, TYPES, CATEGORIES, SUPPLIERS, CURRENCIES, ACCOUNTS, SCENARIOS,
+  DEFAULT_FILTERS, DEFAULT_TOGGLES,
+  ForecastRow, ForecastFilters, ForecastToggles, SubRow, SubRowType,
+  MOCK_FORECAST_ROWS, buildDefaultSubRows, API_ENDPOINTS
+} from '../../constants/forecast.constants';
 
 @Component({
   selector: 'app-forecast',
@@ -23,127 +12,192 @@ interface ForecastRow {
   styleUrls: ['./forecast.component.scss']
 })
 export class ForecastComponent {
-  months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  isMobileView = typeof window !== 'undefined' ? window.innerWidth <= 768 : false;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(): void {
+    this.isMobileView = typeof window !== 'undefined' ? window.innerWidth <= 768 : false;
+  }
+
+  // ── Reference data (from constants; swap for HTTP calls when API is ready) ──
+  readonly months       = MONTHS;
+  readonly sites        = SITES;
+  readonly teams        = TEAMS;
+  readonly types        = TYPES;
+  readonly categories   = CATEGORIES;
+  readonly suppliers    = SUPPLIERS;
+  readonly currencies   = CURRENCIES;
+  readonly accounts     = ACCOUNTS;
+  readonly scenarios    = SCENARIOS;
+  readonly apiEndpoints = API_ENDPOINTS; // kept for future wiring
+
+  // ── State ──────────────────────────────────────────────────────────────────
   currentYear = 2026;
+  filters: ForecastFilters = { ...DEFAULT_FILTERS };
+  toggles: ForecastToggles = { ...DEFAULT_TOGGLES };
 
-  filters = {
-    internalOrder: '',
-    type: '',
-    account: '',
-    team: '',
-    category: '',
-    spendType: '',
-    supplier: '',
-    currency: ''
-  };
+  // TODO: Replace with:
+  //   this.http.get<ForecastRow[]>(API_ENDPOINTS.forecast.getAll())
+  //     .subscribe(rows => this.forecastRows = rows);
+  forecastRows: ForecastRow[] = JSON.parse(JSON.stringify(MOCK_FORECAST_ROWS));
 
-  forecastRows: ForecastRow[] = [
-    {
-      id: 1,
-      internalOrder: 'IO-4001',
-      team: 'Digital',
-      type: 'OPEX',
-      category: 'Software',
-      supplier: 'Microsoft',
-      description: 'Azure Cloud Services',
-      currency: 'AUD',
-      subRows: [
-        { label: 'Forecast in Local Currency',  values: [4400,  5700,  8700,  7700,  8400,  7100,  11100, 10100, 9200,  8500,  7300,  6800] },
-        { label: 'Forecast in Site Currency',   values: [4200,  5500,  8500,  7500,  8200,  6900,  10800, 9800,  9000,  8300,  7100,  6600] },
-        { label: 'Other Sources',               values: [null,  null,  null,  null,  null,  null,  null,  null,  null,  null,  null,  null]  }
-      ]
-    },
-    {
-      id: 2,
-      internalOrder: 'IO-4002',
-      team: 'Operations',
-      type: 'CAPEX',
-      category: 'Infrastructure',
-      supplier: 'AWS',
-      description: 'Server Hardware Upgrade',
-      currency: 'AUD',
-      subRows: [
-        { label: 'Forecast in Local Currency',  values: [12000, 12000, 12000, 15000, 15000, 15000, 18000, 18000, 18000, 20000, 20000, 20000] },
-        { label: 'Forecast in Site Currency',   values: [11500, 11500, 11500, 14500, 14500, 14500, 17500, 17500, 17500, 19500, 19500, 19500] },
-        { label: 'Other Sources',               values: [null,  null,  null,  null,  null,  null,  null,  null,  null,  null,  null,  null]  }
-      ]
-    },
-    {
-      id: 3,
-      internalOrder: 'IO-4003',
-      team: 'Finance',
-      type: 'OPEX',
-      category: 'Consulting',
-      supplier: 'Deloitte',
-      description: 'ERP Implementation Support',
-      currency: 'AUD',
-      subRows: [
-        { label: 'Forecast in Local Currency',  values: [25000, 25000, 30000, 30000, 35000, 35000, 28000, 28000, 32000, 32000, 27000, 27000] },
-        { label: 'Forecast in Site Currency',   values: [24000, 24000, 29000, 29000, 34000, 34000, 27000, 27000, 31000, 31000, 26000, 26000] },
-        { label: 'Other Sources',               values: [5000,  null,  null,  null,  null,  null,  null,  null,  null,  null,  null,  5000]  }
-      ]
-    },
-    {
-      id: 4,
-      internalOrder: 'IO-4004',
-      team: 'Projects',
-      type: 'CAPEX',
-      category: 'Services',
-      supplier: 'Accenture',
-      description: 'Entitlement Support',
-      currency: 'AUD',
-      subRows: [
-        { label: 'Forecast in Local Currency',  values: [8000,  8000,  9500,  9500,  11000, 11000, 10000, 10000, 12000, 12000, 9000,  9000]  },
-        { label: 'Forecast in Site Currency',   values: [7700,  7700,  9200,  9200,  10700, 10700, 9700,  9700,  11700, 11700, 8700,  8700]  },
-        { label: 'Other Sources',               values: [null,  null,  null,  null,  null,  null,  null,  null,  null,  null,  null,  null]  }
-      ]
-    }
-  ];
+  get filteredForecastRows(): ForecastRow[] {
+    return this.forecastRows.filter(row => {
+      if (this.filters.site     && row.site     && row.site     !== this.filters.site)     return false;
+      if (this.filters.team     && row.team     && row.team     !== this.filters.team)     return false;
+      if (this.filters.account  && row.account  && row.account  !== this.filters.account)  return false;
+      if (this.filters.type     && row.type     && row.type     !== this.filters.type)     return false;
+      if (this.filters.category && row.category && row.category !== this.filters.category) return false;
+      if (this.filters.supplier && row.supplier && row.supplier !== this.filters.supplier) return false;
+      if (this.filters.currency && row.currency && row.currency !== this.filters.currency) return false;
+      return true;
+    });
+  }
 
-  getSubRowTotal(values: (number | null)[]): number {
+  // ── Visible sub-row types ──────────────────────────────────────────────────
+
+  /** Types for the top block: TOTAL [Account] */
+  get totalBlockTypes(): SubRowType[] {
+    const t: SubRowType[] = ['local'];
+    if (this.toggles.showSourceCurrency) t.push('contract');
+    if (this.toggles.showActual)         t.push('actual');
+    if (this.toggles.showOtherScenario)  t.push('other-scenario');
+    return t;
+  }
+
+  /** Types for the bottom block: TOTAL RECHARGE [Account] */
+  get rechargeBlockTypes(): SubRowType[] {
+    const t: SubRowType[] = ['recharge'];
+    if (this.toggles.showActual)         t.push('recharge-actual');
+    if (this.toggles.showOtherScenario)  t.push('recharge-other-scenario');
+    return t;
+  }
+
+  /** All visible types in body rows */
+  get visibleTypes(): SubRowType[] {
+    return [...this.totalBlockTypes, ...this.rechargeBlockTypes];
+  }
+
+  visibleSubRows(row: ForecastRow): SubRow[] {
+    return row.subRows.filter(s => {
+      if (s.type === 'contract') {
+        return row.differentCurrency && this.toggles.showSourceCurrency;
+      }
+      if (s.type === 'local') {
+        return true;
+      }
+      if (s.type === 'recharge') {
+        return row.rechargeRequired;
+      }
+      if (s.type === 'actual') {
+        return this.toggles.showActual;
+      }
+      if (s.type === 'other-scenario') {
+        return this.toggles.showOtherScenario;
+      }
+      return false; // recharge-actual and recharge-other-scenario are body-invisible, only for totals
+    });
+  }
+
+  // ── Totals ─────────────────────────────────────────────────────────────────
+  getSubTotal(values: (number | null)[]): number {
     return values.reduce((s: number, v) => s + (v ?? 0), 0);
   }
 
-  getColTotal(mi: number): number {
-    return this.forecastRows.reduce((t, row) =>
-      t + row.subRows.reduce((s, sub) => s + (sub.values[mi] ?? 0), 0), 0);
+  getTypeColTotal(type: SubRowType, mi: number): number {
+    return this.filteredForecastRows.reduce((t, row) => {
+      // For recharge, only sum if row has rechargeRequired
+      if (type === 'recharge' && !row.rechargeRequired) return t;
+      // For contract, only sum if row has differentCurrency
+      if (type === 'contract' && !row.differentCurrency) return t;
+
+      const sub = row.subRows.find(s => s.type === type);
+      return t + (sub ? (sub.values[mi] ?? 0) : 0);
+    }, 0);
   }
 
-  getGrandTotal(): number {
-    return this.months.reduce((t, _, i) => t + this.getColTotal(i), 0);
+  getTypeTotal(type: SubRowType): number {
+    return this.months.reduce((t, _, i) => t + this.getTypeColTotal(type, i), 0);
   }
 
-  roundToK(n: number): number {
-    return Math.round(n / 1000) * 1000;
+  getTypeLabel(type: SubRowType): string {
+    switch (type) {
+      case 'local':                   return 'Forecast';
+      case 'contract':                return 'Contract Currency';
+      case 'actual':                  return 'Actual';
+      case 'other-scenario':          return 'Other Scenario';
+      case 'recharge':                return 'Forecast';
+      case 'recharge-actual':         return 'Actual';
+      case 'recharge-other-scenario': return 'Other Scenario';
+      default:                        return '';
+    }
   }
 
-  fmt(v: number | null): string {
-    if (!v) return '';
-    return v.toLocaleString();
-  }
+  // ── Year navigation ────────────────────────────────────────────────────────
+  prevYear(): void { this.currentYear--; }
+  nextYear(): void { this.currentYear++; }
 
+  // ── Row management ─────────────────────────────────────────────────────────
   addRow(): void {
+    // TODO: After save, call API_ENDPOINTS.forecast.create() to persist the new row.
     this.forecastRows.push({
-      id: Date.now(),
-      internalOrder: '',
-      team: '',
-      type: '',
-      category: '',
-      supplier: '',
-      description: '',
-      currency: 'AUD',
-      subRows: [
-        { label: 'Forecast in Local Currency', values: Array(12).fill(null) },
-        { label: 'Forecast in Site Currency',  values: Array(12).fill(null) },
-        { label: 'Other Sources',              values: Array(12).fill(null) }
-      ]
+      id:               Date.now(),
+      internalOrder:    '',
+      team:             '',
+      type:             'OPEX',
+      category:         '',
+      supplier:         '',
+      description:      '',
+      currency:         'GBP',
+      contractCurrency: 'USD',
+      differentCurrency: false,
+      rechargeRequired:  false,
+      subRows:          buildDefaultSubRows('GBP', 'USD')
     });
   }
 
   removeRow(id: number): void {
+    // TODO: Also call API_ENDPOINTS.forecast.delete(id) when API is ready.
     this.forecastRows = this.forecastRows.filter(r => r.id !== id);
   }
 
-  prevYear(): void { this.currentYear--; }
-  nextYear(): void { this.currentYear++; }
+  // ── Save / Cancel ──────────────────────────────────────────────────────────
+  saveChanges(): void {
+    // TODO: Replace with:
+    //   this.http.post(API_ENDPOINTS.forecast.bulkSave(), this.forecastRows)
+    //     .subscribe(() => { /* success toast */ });
+    console.log('[ForecastComponent] Saving rows:', this.forecastRows);
+  }
+
+  cancelChanges(): void {
+    // TODO: Replace with a fresh GET from API_ENDPOINTS.forecast.getAll()
+    this.forecastRows = JSON.parse(JSON.stringify(MOCK_FORECAST_ROWS));
+    this.filters      = { ...DEFAULT_FILTERS };
+    this.toggles      = { ...DEFAULT_TOGGLES };
+  }
+
+  // ── Format helpers ─────────────────────────────────────────────────────────
+  fmt(v: number | null | undefined): string {
+    if (v === null || v === undefined || v === 0) return '';
+    return Number.isInteger(v) ? v.toLocaleString() : v.toFixed(2);
+  }
+
+  fmtTotal(v: number): string {
+    if (!v) return '—';
+    return Number.isInteger(v) ? v.toLocaleString() : v.toFixed(2);
+  }
+
+  // ── TrackBy helpers to prevent focus loss & DOM recreation ─────────────────
+  trackByRow(index: number, row: ForecastRow): number {
+    return row.id;
+  }
+
+  trackBySubRow(index: number, sub: SubRow): string {
+    return sub.type;
+  }
+
+  trackByIndex(index: number): number {
+    return index;
+  }
 }
