@@ -44,20 +44,20 @@
 }
 
 [data-theme="dark"] {
-  --bg-primary: #0f172a;
-  --bg-secondary: #1e293b;
-  --bg-nav: #1e293b;
-  --bg-hover: #263248;
-  --text-heading: #e2e8f0;
-  --text-primary: #cbd5e1;
+  --bg-primary: #1a2035;
+  --bg-secondary: #202940;
+  --bg-nav: #202940;
+  --bg-hover: #2d3a56;
+  --text-heading: #ffffff;
+  --text-primary: #e2e8f0;
   --text-secondary: #94a3b8;
   --text-label: #94a3b8;
   --text-muted: #64748b;
   --text-subtle: #475569;
-  --border-color: #334155;
-  --border-subtle: #1e2d40;
-  --border-table: #2d3f55;
-  --accent-color: #60a5fa;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-subtle: rgba(255, 255, 255, 0.05);
+  --border-table: rgba(255, 255, 255, 0.08);
+  --accent-color: #38bdf8;
   --card-shadow: rgba(0, 0, 0, 0.3);
   --card-shadow-hover: rgba(0, 0, 0, 0.5);
   --nav-shadow: rgba(0, 0, 0, 0.2);
@@ -69,21 +69,21 @@
   --badge-overdue-bg: #450a0a;
   --badge-overdue-color: #fca5a5;
 
-  /* ── Forecast table colors ── */
-  --forecast-id-bg: #0c3a4f;
-  --forecast-id-border: #0e6080;
-  --forecast-id-text: #67e8f9;
-  --forecast-local-bg: #083344;
-  --forecast-local-text: #67e8f9;
-  --forecast-local-border: #0e6674;
-  --forecast-site-bg: #0c1d40;
-  --forecast-site-text: #93c5fd;
-  --forecast-site-border: #1e40af;
-  --forecast-total-bg: #0a1628;
-  --forecast-total-text: #e2e8f0;
-  --forecast-total-rounded-bg: #060e1a;
-  --btn-success-bg: #16a34a;
-  --btn-danger-bg: #dc2626;
+  /* ── Forecast table colors (Deprecated, now encapsulated inside component) ── */
+  --forecast-id-bg: #1e293b;
+  --forecast-id-border: rgba(255, 255, 255, 0.1);
+  --forecast-id-text: #cbd5e1;
+  --forecast-local-bg: #1e293b;
+  --forecast-local-text: #cbd5e1;
+  --forecast-local-border: rgba(255, 255, 255, 0.1);
+  --forecast-site-bg: #1e293b;
+  --forecast-site-text: #cbd5e1;
+  --forecast-site-border: rgba(255, 255, 255, 0.1);
+  --forecast-total-bg: #0f172a;
+  --forecast-total-text: #cbd5e1;
+  --forecast-total-rounded-bg: #020617;
+  --btn-success-bg: #10b981;
+  --btn-danger-bg: #ef4444;
 }
 
 /* ─── Reset ───────────────────────────────────────────────────── */
